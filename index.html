@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadrant Construction Services - Prompt Library</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f9;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            height: 90vh;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .pane {
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+        }
+
+        /* Left Pane Styles */
+        .left-pane {
+            min-width: 30%;
+            max-width: 50%;
+            background-color: #f8f9fa;
+            border-right: 1px solid #e1e4e8;
+            overflow-y: auto;
+            /* Allows the pane to scroll on very small screens */
+        }
+
+        .company-logo {
+            max-width: 50%;
+            height: auto;
+            margin-bottom: 16px;
+            align-self: center;
+        }
+
+        .left-pane h2 {
+            font-size: 1.25rem;
+            color: #1e3a8a;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .search-filter-container {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            width: 100%;
+        }
+
+        #category-filter {
+            width: 40%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #d1d5da;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            outline: none;
+            background: #fff;
+        }
+
+        #search-bar {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #d1d5da;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        #search-bar:focus {
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.2);
+        }
+
+        #prompt-select {
+            flex-grow: 1;
+            min-height: 0;
+            /* Forces the box to respect container height and use its internal scrollbar */
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #d1d5da;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            background: #fff;
+        }
+
+        #prompt-select optgroup {
+            font-weight: bold;
+            color: #1e3a8a;
+            padding: 12px 10px 4px 10px;
+            background: #f8f9fa;
+        }
+
+        #prompt-select option {
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+        }
+
+        #prompt-select option:checked {
+            background-color: #1e3a8a;
+            color: white;
+        }
+
+        /* Right Pane Styles */
+        .right-pane {
+            flex: 1;
+            position: relative;
+            overflow-y: auto;
+            /* Allows the pane to scroll if the textarea gets very tall */
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .preview-header h2 {
+            font-size: 1.25rem;
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .primary-btn {
+            background-color: #ea580c;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .primary-btn:hover:not(:disabled) {
+            background-color: #c2410c;
+        }
+
+        .primary-btn:disabled {
+            background-color: #fdba74;
+            cursor: not-allowed;
+        }
+
+        .prompt-summary {
+            background-color: #eff6ff;
+            color: #1e3a8a;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            border-left: 4px solid #1e3a8a;
+            line-height: 1.4;
+            display: none;
+            /* Hidden until a prompt is selected */
+        }
+
+        #prompt-preview {
+            min-height: 250px;
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #d1d5da;
+            border-radius: 6px;
+            font-size: 1rem;
+            line-height: 1.5;
+            background: #fff;
+            overflow-y: auto;
+        }
+
+        /* Markdown Content Styles */
+        #prompt-preview h1,
+        #prompt-preview h2,
+        #prompt-preview h3 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #1e3a8a;
+        }
+
+        #prompt-preview h1:first-child,
+        #prompt-preview h2:first-child,
+        #prompt-preview h3:first-child {
+            margin-top: 0;
+        }
+
+        #prompt-preview p {
+            margin-bottom: 1em;
+        }
+
+        #prompt-preview ul,
+        #prompt-preview ol {
+            margin-left: 1.5em;
+            margin-bottom: 1em;
+        }
+
+        /* Inline code styling */
+        #prompt-preview :not(pre)>code {
+            background-color: #f1f5f9;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        /* Code block styling */
+        #prompt-preview pre {
+            margin-bottom: 1em;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            opacity: 1;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.hidden {
+            opacity: 0;
+        }
+
+        .app-footer {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        .changelog-list li {
+            margin-top: 10px;
+        }
+
+        #changelog-link {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        #changelog-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Login Overlay Styles */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f4f4f9;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-box input {
+            padding: 10px;
+            margin: 15px 0;
+            width: 100%;
+            border: 1px solid #d1d5da;
+            border-radius: 4px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .login-box button {
+            padding: 10px 20px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .login-box button:hover {
+            background-color: #152b65;
+        }
+    </style>
+    <!-- Load Marked.js for parsing Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Load Highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+
+<body>
+    <noscript>
+        <div
+            style="background-color: #fee2e2; color: #991b1b; padding: 16px; border-radius: 8px; margin-bottom: 20px; text-align: center; width: 100%; max-width: 1200px; border: 1px solid #f87171; font-family: sans-serif;">
+            <strong>JavaScript is disabled or blocked.</strong><br>
+            If you are viewing this file directly in OneDrive or SharePoint, please <strong>download</strong> the file
+            to your computer and open it in your web browser to use the Prompt Library.
+        </div>
+    </noscript>
+
+    <!-- Login Overlay -->
+    <div id="login-overlay">
+        <div class="login-box">
+            <h2 style="color: #1e3a8a;">Access Required</h2>
+            <p style="color: #666; margin-top: 10px; font-size: 0.9rem;">Please enter the password to view the Prompt
+                Library.</p>
+            <input type="password" id="password-input" placeholder="Password" />
+            <button id="login-btn">Unlock</button>
+            <p id="login-error" style="color: #dc2626; display: none; margin-top: 10px; font-size: 0.9rem;">Incorrect
+                password.</p>
+        </div>
+    </div>
+
+    <!-- Change Log Modal -->
+    <div id="changelog-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 style="color: #1e3a8a; margin-bottom: 16px;">Change Log</h2>
+            <ul class="changelog-list">
+                <li><strong>v0.1</strong> - Initial release of the Prompt Library.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <!-- Left Pane: Selection -->
+        <aside class="pane left-pane">
+            <img src="https://www.lqgroup.org.uk/-/media/project/london-and-quadrant/lqgroup/icons/lq-logo/lqmaster-logodigitalsquareyellow-mar-21.jpg?h=85&iar=0&w=85"
+                alt="Quadrant Construction Services (an L&Q company) Logo" class="company-logo">
+            <h2>Quadrant Construction Services</h2>
+            <p class="subtitle">Prompt Library</p>
+            <div class="search-filter-container">
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                </select>
+                <input type="text" id="search-bar" placeholder="Search prompts..." autocomplete="off">
+            </div>
+            <select id="prompt-select" size="15">
+                <!-- Options will be injected by JavaScript -->
+            </select>
+        </aside>
+
+        <!-- Right Pane: Preview & Actions -->
+        <main class="pane right-pane">
+            <header class="preview-header">
+                <h2 id="preview-title">Preview</h2>
+                <div class="action-buttons">
+                    <button id="download-btn" class="primary-btn" disabled>Download Markdown</button>
+                    <button id="copy-btn" class="primary-btn" disabled>Copy to Clipboard</button>
+                </div>
+            </header>
+
+            <div id="prompt-summary" class="prompt-summary"></div>
+
+            <div id="prompt-preview" class="markdown-body">
+                <p style="color:#666;">Select a prompt to preview...</p>
+            </div>
+
+            <div id="toast-message" class="toast hidden">Copied to clipboard!</div>
+        </main>
+    </div>
+
+    <footer class="app-footer">
+        <p>Disclaimer: This content was generated with the assistance of artificial intelligence. While we strive to
+            ensure accuracy, AI tools can occasionally produce errors, so all information should be verified
+            independently. This is not an official tool or document from L&Q and serves no official purpose. Not for
+            re-distribution.
+        <p>For any queries please contact: ggreen@lqgroup.org.uk</p>
+        <p style="margin-top: 10px;"><a href="#" id="changelog-link">View Change Log</a></p>
+    </footer>
+
+    <script>
+
+        // We are using Base64 encoding to obfuscate the password. 
+        const EXPECTED_PASSWORD_OBFUSCATED = "cHJvbXB0bGlicmFyeQ==";
+
+        const loginOverlay = document.getElementById('login-overlay');
+        const passwordInput = document.getElementById('password-input');
+        const loginBtn = document.getElementById('login-btn');
+        const loginError = document.getElementById('login-error');
+
+        function handleLogin() {
+            const encodedInput = btoa(passwordInput.value);
+
+            if (encodedInput === EXPECTED_PASSWORD_OBFUSCATED) {
+                loginOverlay.style.display = 'none';
+            } else {
+                loginError.style.display = 'block';
+                passwordInput.value = '';
+            }
+        }
+
+        loginBtn.addEventListener('click', handleLogin);
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleLogin();
+        });
+
+        // Configuration: URL to your prompts.json file on GitHub
+        // Example: "https://raw.githubusercontent.com/YourOrg/YourRepo/main/prompts.json"
+        const GITHUB_PROMPTS_URL = "https://github.com/Judgegeo/PromptLibrary/blob/main/prompts.json";
+
+        // Store prompts globally
+        let promptsData = [];
+
+        // Fetch prompts from GitHub
+        async function fetchPrompts() {
+            if (!GITHUB_PROMPTS_URL) {
+                console.warn("GITHUB_PROMPTS_URL is not set. Please set it to a valid raw GitHub JSON URL.");
+                return [
+                    {
+                        id: 'demo-prompt',
+                        category: 'Configuration',
+                        title: 'Setup Required',
+                        description: 'Please configure the GITHUB_PROMPTS_URL in the source code.',
+                        content: 'You need to set `GITHUB_PROMPTS_URL` in `index.html` to point to your GitHub `prompts.json` file. The file should contain a JSON array of prompt objects, with properties like `id`, `category`, `title`, `description`, and `content`.'
+                    }
+                ];
+            }
+
+            try {
+                // We add a cache-busting query parameter in case the user frequently updates the raw github file
+                const response = await fetch(`${GITHUB_PROMPTS_URL}?t=${new Date().getTime()}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error("Failed to fetch prompts from GitHub:", error);
+                alert("Failed to load prompts from GitHub. Please check the console and ensure the GITHUB_PROMPTS_URL is correct and publicly accessible.");
+                return [];
+            }
+        }
+
+        // DOM Elements
+        const selectElement = document.getElementById('prompt-select');
+        const categoryFilter = document.getElementById('category-filter');
+        const searchBar = document.getElementById('search-bar');
+        const previewTitle = document.getElementById('preview-title');
+        const promptSummary = document.getElementById('prompt-summary');
+        const previewContainer = document.getElementById('prompt-preview');
+        const copyBtn = document.getElementById('copy-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const toastMessage = document.getElementById('toast-message');
+        const changelogModal = document.getElementById('changelog-modal');
+        const changelogLink = document.getElementById('changelog-link');
+        const closeBtn = document.querySelector('.close-btn');
+        let currentPromptContent = ''; // Store the raw markdown of the selected prompt
+
+        // Populate the category filter dynamically
+        function populateCategoryFilter() {
+            const categories = new Set();
+            promptsData.forEach(prompt => categories.add(prompt.category || 'Misc'));
+
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categoryFilter.appendChild(option);
+            });
+        }
+
+        // Render prompts to the select dropdown, with optional filtering
+        function renderPromptOptions() {
+            const filterText = searchBar.value.toLowerCase();
+            const selectedCategory = categoryFilter.value;
+            selectElement.innerHTML = ''; // Clear existing options
+
+            const filteredPrompts = promptsData.filter(prompt => {
+                const matchesText = prompt.title.toLowerCase().includes(filterText) || (prompt.description && prompt.description.toLowerCase().includes(filterText));
+                const matchesCategory = selectedCategory === 'all' || (prompt.category || 'Misc') === selectedCategory;
+                return matchesText && matchesCategory;
+            });
+
+            // Group prompts by category
+            const groupedPrompts = {};
+            filteredPrompts.forEach(prompt => {
+                const cat = prompt.category || 'Misc';
+                if (!groupedPrompts[cat]) groupedPrompts[cat] = [];
+                groupedPrompts[cat].push(prompt);
+            });
+
+            // Create optgroups and append options
+            for (const category in groupedPrompts) {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = category;
+                groupedPrompts[category].forEach(prompt => {
+                    const option = document.createElement('option');
+                    option.value = prompt.id;
+                    option.textContent = prompt.title;
+                    optgroup.appendChild(option);
+                });
+                selectElement.appendChild(optgroup);
+            }
+        }
+
+        // Initialize the application
+        async function init() {
+            selectElement.innerHTML = '<option disabled>Loading prompts from GitHub...</option>';
+
+            // Load prompts from GitHub
+            promptsData = await fetchPrompts();
+
+            populateCategoryFilter();
+            // Populate the select dropdown initially
+            renderPromptOptions();
+
+            // Event Listeners
+            selectElement.addEventListener('change', handleSelection);
+            copyBtn.addEventListener('click', copyToClipboard);
+            downloadBtn.addEventListener('click', downloadMarkdown);
+            searchBar.addEventListener('input', renderPromptOptions);
+            categoryFilter.addEventListener('change', renderPromptOptions);
+
+            // Modal Event Listeners
+            changelogLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                changelogModal.classList.add('show');
+            });
+            closeBtn.addEventListener('click', () => changelogModal.classList.remove('show'));
+            window.addEventListener('click', (e) => {
+                if (e.target === changelogModal) changelogModal.classList.remove('show');
+            });
+        }
+
+        // Handle prompt selection
+        function handleSelection(event) {
+            const selectedId = event.target.value;
+            const selectedPrompt = promptsData.find(p => p.id === selectedId);
+
+            if (selectedPrompt) {
+                previewTitle.textContent = selectedPrompt.title;
+
+                promptSummary.textContent = selectedPrompt.description;
+                promptSummary.style.display = 'block'; // Make the summary box visible
+
+                // Parse the raw markdown into HTML and display it
+                previewContainer.innerHTML = marked.parse(selectedPrompt.content);
+
+                // Apply syntax highlighting to code blocks
+                previewContainer.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+
+                // Save the raw text to be copied
+                currentPromptContent = selectedPrompt.content;
+
+                // Enable action buttons
+                copyBtn.disabled = false;
+                downloadBtn.disabled = false;
+            }
+        }
+
+        // Handle Copy to Clipboard using the modern Clipboard API
+        async function copyToClipboard() {
+            if (!currentPromptContent) return;
+
+            try {
+                await navigator.clipboard.writeText(currentPromptContent);
+                showToast();
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy to clipboard. Please copy manually.');
+            }
+        }
+
+        // Handle Download as Markdown
+        function downloadMarkdown() {
+            if (!currentPromptContent) return;
+
+            const filename = (previewTitle.textContent || 'prompt').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.md';
+            const blob = new Blob([currentPromptContent], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Show temporary success message
+        function showToast() {
+            toastMessage.classList.remove('hidden');
+
+            // Hide toast after 2.5 seconds
+            setTimeout(() => {
+                toastMessage.classList.add('hidden');
+            }, 2500);
+        }
+
+        // Boot up the app
+        init();
+    </script>
+</body>
+
+</html>
