@@ -1,12 +1,15 @@
 [
   {
+    "id": "security-config",
+    "password_hash": "73b5af81fee7b7bf28aa8078f6802ffb8fc4da41551c2323de2db169a23833c4"
+  },
+  {
     "id": "flash-quote-comparison",
     "title": "Subcontractor Quote Flash Comparison",
     "category": "Cost Planning & Analysis",
     "summary": {
       "purpose": "Runs a high-level comparison across multiple subcontractor quotes to highlight price variances, scope exclusions, and key cost drivers.",
-      "use_case": "Use during procurement/tender evaluation when you receive multiple bids and need to present a summary comparison report for negotiation or client review.",
-      "recommended_llm": "Gemini 1.5 Pro, Claude 3.5 Sonnet, or GPT-4o (Temperature: 0.1)"
+      "use_case": "Use during procurement/tender evaluation when you receive multiple bids and need to present a summary comparison report for negotiation or client review."
     },
     "prompt_template": "You are an expert, highly qualified Senior Quantity Surveyor. Analyze and perform a high-level flash comparison on the following subcontractor quotes for the {{trade_package}} package.\n\nProject Requirements & Budget:\n{{project_requirements}}\n\nSubcontractor Quote A (Name: {{sub_a_name}}):\n{{sub_a_quote}}\n\nSubcontractor Quote B (Name: {{sub_b_name}}):\n{{sub_b_quote}}\n\nSubcontractor Quote C (Name: {{sub_c_name}} - Optional):\n{{sub_c_quote}}\n\nPlease provide a structured, professional flash comparison report including:\n1. **Executive Summary**: A brief comparison of total prices, variance from the budget, and overall recommendation.\n2. **Comparison Matrix**: A side-by-side table highlighting key pricing items, rates, and totals.\n3. **Scope Exclusions & Inclusions**: Highlight any item that is included in one quote but excluded/qualified in another.\n4. **Key Risks & Cost Drivers**: Identify any price vulnerabilities, provisional sums, or hidden contingencies in the quotes.",
     "placeholders": [
@@ -66,8 +69,7 @@
     "category": "Contract Administration",
     "summary": {
       "purpose": "Audits subcontractor scope of works and attendance documents for context, grammatical syntax, and conflicting information.",
-      "use_case": "Use during contract compilation or post-tender interviews to verify that the final subcontractor agreement is watertight, legally clear, and self-consistent.",
-      "recommended_llm": "Gemini 1.5 Pro or Claude 3.5 Sonnet (Temperature: 0.2)"
+      "use_case": "Use during contract compilation or post-tender interviews to verify that the final subcontractor agreement is watertight, legally clear, and self-consistent."
     },
     "prompt_template": "You are a highly qualified Senior Quantity Surveyor specializing in contract administration. Review the following Subcontractor Scope of Works and Attendance Document for the {{trade_package}} trade package.\n\nYour goal is to ensure the text is watertight, contextually correct, syntactically clear, and contains no conflicting information or ambiguities.\n\nMain Contract Terms & Project Context:\n{{project_context}}\n\nDraft Subcontractor Scope of Works:\n{{scope_of_works}}\n\nDraft Attendance Document (e.g., site access, hoisting, scaffolding, power, waste disposal):\n{{attendance_document}}\n\nProvide a detailed audit report:\n1. **Syntax & Clarity Edits**: Point out any grammatical, spelling, or phrasing errors that could cause legal ambiguity.\n2. **Contradictions & Conflict Log**: Highlight any discrepancies between the Scope of Works and the Attendances document (e.g., Scope says subcontractor provides waste removal, but Attendance says Main Contractor provides waste bins).\n3. **Context Verification**: Confirm whether the terms align with standard industry terminology and standard forms of contract (e.g., JCT, NEC).\n4. **Recommended Redrafting**: Provide ready-to-use rewritten clauses for the conflicting or weak sections.",
     "placeholders": [
@@ -103,8 +105,7 @@
     "category": "Risk & Tender Management",
     "summary": {
       "purpose": "Identifies scope gaps between prime contract requirements and subcontractor offers, with strategic suggestions to transfer risk.",
-      "use_case": "Use during the pre-construction phase or tender packaging to prevent budget overruns due to gaps and to draft risk-allocation provisions.",
-      "recommended_llm": "Gemini 1.5 Pro or Claude 3.5 Sonnet (Temperature: 0.3)"
+      "use_case": "Use during the pre-construction phase or tender packaging to prevent budget overruns due to gaps and to draft risk-allocation provisions."
     },
     "prompt_template": "You are a highly qualified Quantity Surveyor and risk manager. Analyze the following Prime Contract specifications against the Subcontractor's Proposal to identify scope gaps and recommend strategies for pushing risk onto the subcontractor.\n\nPrime Contract Package Requirements:\n{{prime_requirements}}\n\nSubcontractor's Proposal / Tender Submission:\n{{subcontractor_proposal}}\n\nSpecify key risk tolerance goals (if any):\n{{risk_goals}}\n\nProvide a comprehensive assessment report:\n1. **Scope Gap Register**: List specific elements, materials, or services required by the Prime Contract that are missing, partially covered, or qualified out in the Subcontractor's proposal.\n2. **Potential Cost Exposure**: Estimate the risk (Low/Medium/High cost impact) of these gaps remaining unaddressed.\n3. **Risk Transfer Recommendations**: Provide concrete recommendations on how to draft the subcontract clauses or scope elements to push the risk, responsibility, and liability for these items onto the subcontractor (e.g., 'design portion responsibility', 'site condition risk', 'inflation/market fluctuation risk').\n4. **Subcontract Negotiation Points**: Draft specific questions or line-item inclusions to send to the subcontractor during final negotiation to close the gaps at no extra cost.",
     "placeholders": [
@@ -134,8 +135,7 @@
     "category": "Contract Administration",
     "summary": {
       "purpose": "Evaluates subcontractor variation/change order claims for contractual validity, quantity accuracy, and rates alignment.",
-      "use_case": "Use when a subcontractor submits a change order request and you need to verify if the work is a genuine variation, assess costs against contract rates, and draft a response.",
-      "recommended_llm": "Gemini 1.5 Pro or Claude 3.5 Sonnet (Temperature: 0.1)"
+      "use_case": "Use when a subcontractor submits a change order request and you need to verify if the work is a genuine variation, assess costs against contract rates, and draft a response."
     },
     "prompt_template": "You are a highly qualified Senior Quantity Surveyor. Evaluate the following subcontractor variation claim for the {{trade_package}} package.\n\nSubcontract Agreement Details (Original scope, contract clauses, agreed rates):\n{{contract_details}}\n\nSubcontractor's Variation Claim (Proposed works, reasons, quantity takeoff, rates, and total cost):\n{{variation_claim}}\n\nAssess the claim and provide a structured, professional QS report:\n1. **Contractual Entitlement**: Analyze whether the subcontractor is contractually entitled to a variation under the contract conditions (referencing standard JCT/NEC principles if applicable). Is this work already captured under the original scope, or is it a genuine change?\n2. **Quantum & Rate Assessment**: Verify the quantities, labor rates, and material costs. Are they consistent with the contract's schedule of rates? Are they reasonable for the market?\n3. **Recommended Action & Valuation**: Outline your calculated value for the variation (which may be £0.00 if rejected, or an adjusted figure) and justify it.\n4. **Contractual Response Letter**: Draft a professional letter to the subcontractor formally accepting, partially accepting (with valuation details), or rejecting the variation claim.",
     "placeholders": [
@@ -165,8 +165,7 @@
     "category": "Cost Planning & Analysis",
     "summary": {
       "purpose": "Assesses a subcontractor's interim payment application against site progress, retention terms, and materials-on-site rules.",
-      "use_case": "Use monthly during the payment cycle to assess payment claims, calculate retention, adjust for work done, and generate payment notices.",
-      "recommended_llm": "Gemini 1.5 Pro or GPT-4o (Temperature: 0.0)"
+      "use_case": "Use monthly during the payment cycle to assess payment claims, calculate retention, adjust for work done, and generate payment notices."
     },
     "prompt_template": "You are a highly qualified Senior Quantity Surveyor. Assess the following subcontractor's interim payment application.\n\nContract Valuation Terms (Total contract sum, retention rate %, discount %, and materials-on-site rules):\n{{contract_terms}}\n\nPrevious Certifications (Cumulative amount previously certified, retention previously held):\n{{previous_certifications}}\n\nSubcontractor's Current Application (Claimed value of work done to date, materials on site, variations claimed):\n{{payment_application}}\n\nSite Progress Valuation (QS assessment of actual percentage of work complete, verified materials on site):\n{{site_progress_valuation}}\n\nPerform the valuation assessment and provide a detailed QS Valuation Report:\n1. **Work Valuation Summary Table**: Create a table detailing:\n   - Subcontractor Claimed Value vs. QS Assessed Value\n   - Gross Assessed Value to Date\n   - Retention Deduction (apply retention % from terms)\n   - Net Value to Date\n   - Less: Previous Certified Net Value\n   - Current Net Payment Due\n2. **Assessment Notes & Adjustments**: Provide detailed justifications for any differences between the subcontractor's claim and your assessment (e.g. over-claiming progress, unapproved variations, unverified materials on site).\n3. **Subcontractor Payment Notice**: Draft a formal Payment Notice conforming to standard construction payment rules (e.g. Housing Grants, Construction and Regeneration Act requirements), detailing the basis of valuation.",
     "placeholders": [
