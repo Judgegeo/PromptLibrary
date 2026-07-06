@@ -194,5 +194,41 @@
         "placeholder": "Paste site measurements, progress percentages, or clerk of works notes..."
       }
     ]
+  },
+  {
+    "id": "schedule-consequence-scanner",
+    "title": "Programme & Tender Event Consequence Scanner",
+    "category": "Risk & Tender Management",
+    "summary": {
+      "purpose": "Reviews a construction programme and tender event schedule against industry standards to identify commercial, lead-time, and regulatory risks, producing a detailed consequence scan table.",
+      "use_case": "Use during the pre-construction phase to scan the procurement timeline and construction programme for critical path overlaps, late-order risks, and regulatory compliance issues."
+    },
+    "prompt_template": "You are an expert, highly qualified Senior Quantity Surveyor. Perform a detailed Commercial Consequence Scan on the provided Construction Programme and Tender Event Schedule.\n\nProject Overview:\n{{project_overview}}\n\nConstruction Programme Details:\n{{construction_programme}}\n\nTender Event Schedule (Procurement timelines & lead times):\n{{tender_event_schedule}}\n\nIndustry Standards / Contractual Framework (e.g., JCT/NEC, typical lead times):\n{{industry_standards}}\n\nYour goal is to review these schedules, highlight potential conflicts, alignment issues, or risks against industry standards, and identify potential financial, social (logistical), environmental, reputational, and legal consequences of the current schedules.\n\nFor each category, consider the short, medium, and long-term effects. For mitigations, categorise them into Action (items we control), Influence (items we can affect), and Monitor (external items to watch). If a category has no items, leave it blank. Include regulatory, ethical, and resident/public perspectives.\n\nAnalyze the following categories:\n\n1. Financial:\n* Positive: (e.g., procurement cost savings, early completion bonuses, cash flow benefits)\n* Specific Impact: (Describe the specific financial benefit)\n* Likelihood: (High, Medium, Low)\n* Mitigation/Maximisation Strategies: (Actions to maximise the benefit)\n* Negative: (e.g., prolongation costs, Liquidated and Ascertained Damages (LADs), late-order inflation risks)\n* Specific Impact: (Describe the specific financial risk)\n* Likelihood: (High, Medium, Low)\n* Mitigation/Minimisation Strategies: (Actions to minimise the risk)\n* Unintended Consequence: (e.g., early order of materials causing double-handling or storage charges)\n* Specific Impact: (Describe the specific financial item)\n* Likelihood: (High, Medium, Low)\n* Mitigation/Management Strategies: (Actions to manage the consequence)\n\n2. Social (Site & Public Logistics):\n* Positive: (e.g., minimized local disruption, optimized working hours)\n* Specific Impact: (Describe the social benefit)\n* Likelihood: (High, Medium, Low)\n* Mitigation Strategies\n* Negative: (e.g., resident noise complaints, road closures, access restrictions overlapping with key deliveries)\n* Specific Impact: (Describe the social risk)\n* Likelihood: (High, Medium, Low)\n* Mitigation Strategies\n* Unintended Consequence: (e.g., shifted working hours causing labor fatigue or overtime claims)\n* Specific Impact: (Describe the social impact)\n* Likelihood: (High, Medium, Low)\n* Mitigation Strategies\n\n3. Environmental:\n* Positive: (e.g., optimized waste disposal windows, seasonal planning)\n* Specific Impact: (Describe the benefit)\n* Likelihood: (High, Medium, Low)\n* Mitigation Strategies\n* Negative: (e.g., winter working concrete delays, environmental submittal lag times, ecology window clashes)\n* Specific Impact: (Describe the risk)\n* Likelihood: (High, Medium, Low)\n* Mitigation Strategies\n* Unintended Consequence: (e.g., stockpiled materials causing dust pollution or run-off issues)\n* Specific Impact: (Describe the impact)\n* Likelihood: (High, Medium, Low)\n* Mitigation/Management Strategies\n\n4. Reputational:\n* Positive: (e.g., early completion milestone achieved, public trust)\n* Specific Impact: (Describe the benefit)\n* Likelihood: (High, Medium, Low)\n* Mitigation Strategies\n* Negative: (e.g., missed target dates causing client dissatisfaction, public supply-chain disputes)\n* Specific Impact: (Describe the risk)\n* Likelihood: (High, Medium, Low)\n* Mitigation Strategies\n* Unintended Consequence: (e.g., fast-tracked construction raising quality concerns)\n* Specific Impact: (Describe the impact)\n* Likelihood: (High, Medium, Low)\n* Mitigation Strategies\n\n5. Legal & Regulatory:\n* Positive: (e.g., proactive building control inspections, planning condition discharge approvals)\n* Specific Impact: (Describe the benefit)\n* Likelihood: (High, Medium, Low)\n* Mitigation Strategies\n* Negative: (e.g., missing critical JCT/NEC design submittal review durations, failure to notice extension of time (EOT))\n* Specific Impact: (Describe the risk)\n* Likelihood: (High, Medium, Low)\n* Mitigation Strategies\n* Unintended Consequence: (e.g., sudden regulatory updates changing compliance guidelines mid-programme)\n* Specific Impact: (Describe the impact)\n* Likelihood: (High, Medium, Low)\n* Mitigation/Management Strategies\n\nOutput format:\nPlease convert the consequence scan into a well-structured Markdown table format. Organize the categories, impacts, likelihoods, and mitigation strategies clearly while retaining all specific details (Action, Influence, Monitor).",
+    "placeholders": [
+      {
+        "name": "project_overview",
+        "label": "Project Overview & Target Goals",
+        "type": "textarea",
+        "placeholder": "Briefly describe the project scope, location, client, and contract type..."
+      },
+      {
+        "name": "construction_programme",
+        "label": "Construction Programme Details",
+        "type": "textarea",
+        "placeholder": "Paste critical path milestones, stages, and activity durations..."
+      },
+      {
+        "name": "tender_event_schedule",
+        "label": "Tender Event Schedule & Lead Times",
+        "type": "textarea",
+        "placeholder": "Paste subcontractor tender release dates, order placement deadlines, and manufacturer lead times..."
+      },
+      {
+        "name": "industry_standards",
+        "label": "Industry Standards / Constraints",
+        "type": "text",
+        "placeholder": "e.g., typical lead times, standard submittal review periods (e.g., JCT 14-day rule)"
+      }
+    ]
   }
 ]
