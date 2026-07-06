@@ -65,37 +65,31 @@
   },
   {
     "id": "scope-attendance-checker",
-    "title": "Scope & Attendances Context Auditor",
+    "title": "Contractual Risk & Clarity Audit",
     "category": "Contract Administration",
     "summary": {
-      "purpose": "Audits subcontractor scope of works and attendance documents for context, grammatical syntax, and conflicting information.",
-      "use_case": "Use during contract compilation or post-tender interviews to verify that the final subcontractor agreement is watertight, legally clear, and self-consistent."
+      "purpose": "Conducts a comprehensive contractual risk and clarity audit of trade specifications and schedules of attendances to ensure watertight, unambiguous risk transfer.",
+      "use_case": "Use during contract packaging or post-tender compilation to review draft specifications and attendances for conflicts, commercial variation exposures, and quality compliance."
     },
-    "prompt_template": "You are a highly qualified Senior Quantity Surveyor specializing in contract administration. Review the following Subcontractor Scope of Works and Attendance Document for the {{trade_package}} trade package.\n\nYour goal is to ensure the text is watertight, contextually correct, syntactically clear, and contains no conflicting information or ambiguities.\n\nMain Contract Terms & Project Context:\n{{project_context}}\n\nDraft Subcontractor Scope of Works:\n{{scope_of_works}}\n\nDraft Attendance Document (e.g., site access, hoisting, scaffolding, power, waste disposal):\n{{attendance_document}}\n\nProvide a detailed audit report:\n1. **Syntax & Clarity Edits**: Point out any grammatical, spelling, or phrasing errors that could cause legal ambiguity.\n2. **Contradictions & Conflict Log**: Highlight any discrepancies between the Scope of Works and the Attendances document (e.g., Scope says subcontractor provides waste removal, but Attendance says Main Contractor provides waste bins).\n3. **Context Verification**: Confirm whether the terms align with standard industry terminology and standard forms of contract (e.g., JCT, NEC).\n4. **Recommended Redrafting**: Provide ready-to-use rewritten clauses for the conflicting or weak sections.",
+    "prompt_template": "You are an expert, highly qualified Senior Quantity Surveyor specializing in contract administration. Your task is to conduct a comprehensive Contractual Risk and Clarity Audit of the draft Trade Specification and Schedule of Attendances.\n\nYour goal is to ensure a clear, enforceable, and unambiguous transfer of risk, responsibility, and performance obligations to the Subcontractor, acting on behalf of us (the QCS / Main Contractor).\n\nProject Overview & Context:\n{{project_context}}\n\nDraft Trade Specification / Scope of Works:\n{{trade_specification}}\n\nDraft Schedule of Attendances (e.g., site facilities, scaffolding, access):\n{{schedule_of_attendances}}\n\nYour audit must evaluate the documents across the following 8 core dimensions:\n1. **Scope Clarity**: Are works clearly described, measurable, and verifiable? Identify missing scope items, vague or subjective wording, and implicit assumptions. Ensure 'Design Responsibility' is explicitly defined where applicable, and interfaces with other trades are clearly allocated.\n2. **Risk Allocation**: Are key risks (temporary works, setting out, coordination, protection of works, site access constraints) explicitly assigned to the subcontractor? Remove shared or undefined risk positions to ensure no residual risk unintentionally sits with the Contractor.\n3. **Schedule of Attendances**: Cross-check attendances against the Specification to ensure no duplication, omissions, or contradictions. Confirm that Contractor-provided attendances are clearly limited and subcontractor obligations are fully defined.\n4. **Interfaces & Coordination**: Identify all trade interfaces and ensure responsibility is clearly allocated with no scope gaps. Confirm the Subcontractor is accountable for coordination with others and integration of their works.\n5. **Programme & Performance**: Ensure requirements are measurable and enforceable. Confirm Subcontractor obligations include programme compliance, sequencing/phasing, resource allocation, and recovery obligations for delays. Highlight undefined milestones or weak performance wording.\n6. **Quality & Compliance**: Verify all quality expectations are clearly defined and referenced to specific standards (e.g., BS, ISO, project specs). Ensure inspection and testing requirements are explicit and that spelling/grammatical errors are eliminated.\n7. **Commercial & Variation Risk**: Identify wording that could allow additional cost claims or variations due to unclear scope. Ensure scope is sufficiently detailed to prevent re-measure disputes and that provisional or undefined elements are minimised.\n8. **Ambiguities, Conflicts & Gaps**: Identify and resolve conflicting clauses between documents, inconsistent terminology, or missing responsibilities.\n\nPlease provide a structured Audit Report including:\n\n### A. Issue Register (Markdown Table Format)\nFor each issue identified, include:\n- **Reference**: (Clause / Section / Page)\n- **Issue Description**: (What is the conflict, gap, or ambiguity?)\n- **Risk Exposure**: (Commercial / Programme / Quality / Legal)\n- **Recommended Amendment**: (Action required to resolve)\n- **Suggested Draft Wording**: (Watertight contractual clause to insert)\n\n### B. Key Risk Summary\n- High-risk items requiring urgent action before contract signing.\n- Potential dispute triggers and areas of incomplete risk transfer.\n\n### C. Overall Assessment\n- Evaluate the overall commercial robustness, scope completeness, and risk clarity of the documents.\n- Summary of major weaknesses in current documents.",
     "placeholders": [
-      {
-        "name": "trade_package",
-        "label": "Trade Package",
-        "type": "text",
-        "placeholder": "e.g. HVAC, Structural Steel, Scaffolding"
-      },
       {
         "name": "project_context",
         "label": "Project Context & Contract Type",
         "type": "textarea",
-        "placeholder": "e.g. JCT Design and Build, NEC4 Option A, main contract terms..."
+        "placeholder": "e.g., JCT Design and Build, NEC4 Option A, main contract terms, prime requirements..."
       },
       {
-        "name": "scope_of_works",
-        "label": "Draft Scope of Works Text",
+        "name": "trade_specification",
+        "label": "Draft Trade Specification / Scope",
         "type": "textarea",
-        "placeholder": "Paste the subcontractor's detailed scope of works..."
+        "placeholder": "Paste the draft subcontractor specification or scope of works..."
       },
       {
-        "name": "attendance_document",
-        "label": "Draft Attendance Document Text",
+        "name": "schedule_of_attendances",
+        "label": "Draft Schedule of Attendances",
         "type": "textarea",
-        "placeholder": "Paste the attendance specifications (scaffold, site facilities, etc.)..."
+        "placeholder": "Paste the draft attendance schedule (scaffold, hoisting, site facilities, etc.)..."
       }
     ]
   },
